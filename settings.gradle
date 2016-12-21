@@ -1,1 +1,2 @@
 include ':TouchExamples'
+include ':firstporject', ':secondproject'
