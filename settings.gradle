@@ -1,2 +1,3 @@
-include ':TouchExamples'
-include ':firstporject', ':secondproject'
+//include ':TouchExamples'
+//include ':firstporject', ':secondproject'
+include ':aidlservice',':aidlclient'
