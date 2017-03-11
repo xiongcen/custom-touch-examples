@@ -6,5 +6,5 @@ import com.example.xiongcen.aidlservice.Student;
 
 interface IMyService {
     List<Student> getStudent();
-        void addStudent(in Student student);
+    void addStudent(in Student student);
 }

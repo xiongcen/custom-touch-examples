@@ -58,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        Button button2 = (Button) findViewById(R.id.btn_cancel);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.btn_cancel) {
+                    MainActivity.this.unbindService(mServiceConnection);
+                }
+            }
+        });
         Log.d(TAG, "onCreate..."+ android.os.Process.myPid());
     }
 

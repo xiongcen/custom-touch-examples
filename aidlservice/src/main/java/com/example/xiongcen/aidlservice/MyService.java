@@ -1,8 +1,6 @@
 package com.example.xiongcen.aidlservice;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -27,6 +25,8 @@ public class MyService extends Service {
 
         @Override
         public List<Student> getStudent() throws RemoteException {
+            // 使用synchronized关键字的原因：由于服务端的Binder方法运行在Binder的线程池中，
+            // 所以Binder方法不管是否耗时都应该采用同步的方法去实现，因为它已经运行在一个线程中了。
             synchronized (mStudents) {
                 Log.d(TAG, "MyService mBinder getStudent()");
                 return mStudents;
@@ -42,8 +42,8 @@ public class MyService extends Service {
             }
         }
 
-        //在这里可以做权限认证，return false意味着客户端的调用就会失败，比如下面，只允许包名为com.example.test的客户端通过，
-        //其他apk将无法完成调用过程
+        // 在这里可以做权限认证，return false意味着客户端的调用就会失败，比如下面，
+        // 只允许包名为com.example.xiongcen.aidlclient的客户端通过，其他apk将无法完成调用过程
         public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
                 throws RemoteException {
             String packageName = null;
@@ -84,7 +84,6 @@ public class MyService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, String.format("on bind,intent = %s", intent.toString()));
-//        displayNotificationMessage("服务已启动");
         return mBinder;
     }
 
@@ -99,17 +98,6 @@ public class MyService extends Service {
         super.onDestroy();
     }
 
-    private void displayNotificationMessage(String message) {
-        Notification notification = new Notification(R.mipmap.ic_launcher, message,
-                System.currentTimeMillis());
-        notification.flags = Notification.FLAG_AUTO_CANCEL;
-        notification.defaults |= Notification.DEFAULT_ALL;
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MyService.class), 0);
-        notification.contentIntent = contentIntent;
-        mNotificationManager.notify(1, notification);
-    }
-
     class ServiceWorker implements Runnable {
         long counter = 0;
 
@@ -117,7 +105,7 @@ public class MyService extends Service {
         public void run() {
             // do background processing here.....
             while (mCanRun) {
-                Log.d("scott", "" + counter);
+                Log.d(TAG, "" + counter);
                 counter++;
                 try {
                     Thread.sleep(2000);

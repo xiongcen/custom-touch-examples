@@ -18,7 +18,6 @@
             android:process=":remote"
             android:exported="true" >
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="com.example.xiongcen.aidlservice.MyService" />
             </intent-filter>
         </service>
