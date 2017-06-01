@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.util.Log;
@@ -27,6 +28,7 @@ public class MyService extends Service {
         public List<Student> getStudent() throws RemoteException {
             // 使用synchronized关键字的原因：由于服务端的Binder方法运行在Binder的线程池中，
             // 所以Binder方法不管是否耗时都应该采用同步的方法去实现，因为它已经运行在一个线程中了。
+            System.out.println("xc " + "MyService.getStudent "+(Thread.currentThread().getId()== Looper.getMainLooper().getThread().getId()));
             synchronized (mStudents) {
                 Log.d(TAG, "MyService mBinder getStudent()");
                 return mStudents;
