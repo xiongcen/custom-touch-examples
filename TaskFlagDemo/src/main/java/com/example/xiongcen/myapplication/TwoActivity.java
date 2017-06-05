@@ -18,7 +18,7 @@ public class TwoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal);
 
-        System.out.println("xc " + "TwoActivity.onCreate taskid:" + getTaskId() + ";" + this);
+        System.out.println("xc " + "TwoActivity#onCreate() taskid:" + getTaskId() + ";" + this);
 
         TextView text = (TextView) findViewById(R.id.text);
         text.setText("TwoActivity Activity");
@@ -37,53 +37,53 @@ public class TwoActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("xc " + "TwoActivity.onStart " + this);
+        System.out.println("xc " + "TwoActivity#onStart() " + this);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        System.out.println("xc " + "TwoActivity.onRestart " + this);
+        System.out.println("xc " + "TwoActivity#onRestart() " + this);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        System.out.println("xc " + "TwoActivity.onNewIntent " + getTaskId());
+        System.out.println("xc " + "TwoActivity#onNewIntent() " + getTaskId());
         getFlag();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("xc " + "TwoActivity.onResume " + this);
+        System.out.println("xc " + "TwoActivity#onResume() " + getTaskId() + ";" + this);
         getFlag();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        System.out.println("xc " + "TwoActivity.onPause " + this);
+        System.out.println("xc " + "TwoActivity#onPause() " + this);
         getFlag();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        System.out.println("xc " + "TwoActivity.onStop " + this);
+        System.out.println("xc " + "TwoActivity#onStop() " + this);
         getFlag();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("xc " + "TwoActivity.onDestroy " + this);
+        System.out.println("xc " + "TwoActivity#onDestroy() " + this);
         getFlag();
     }
 
     private void getFlag() {
         Intent intent = getIntent();
         int flags = intent.getFlags();
-        System.out.println("xc " + "TwoActivity.getFlag flags:" + flags);
+        System.out.println("xc " + "TwoActivity#getFlag() flags:" + flags);
     }
 }

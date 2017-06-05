@@ -38,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNotification();
+                createNotification1();
+                createNotification2();
             }
         });
     }
 
-    private void createNotification() {
+    private void createNotification1() {
 
         Context context = getApplicationContext();
         int requestCode = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
@@ -51,9 +52,30 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
+                        .setContentTitle("My notification1")
+                        .setContentText("Hello World1!");
         Intent resultIntent = new Intent(this, PushReceiver.class);
+        resultIntent.putExtra("flag", "one");
+
+        final PendingIntent pIntent = PendingIntent.getBroadcast(context, requestCode, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(mId++, mBuilder.build());
+    }
+
+    private void createNotification2() {
+
+        Context context = getApplicationContext();
+        int requestCode = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("My notification2")
+                        .setContentText("Hello World2!");
+        Intent resultIntent = new Intent(this, PushReceiver.class);
+        resultIntent.putExtra("flag", "two");
 
 
         final PendingIntent pIntent = PendingIntent.getBroadcast(context, requestCode, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -67,8 +89,19 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Intent intent1 = new Intent(context, OneActivity.class);
-            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (intent == null) {
+                return;
+            }
+            String flag = intent.getStringExtra("flag");
+            Intent intent1 = null;
+            if ("one".equals(flag)) {
+                intent1 = new Intent(context, OneActivity.class);
+//                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            } else if ("two".equals(flag)) {
+                intent1 = new Intent(context, TwoActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
+
             context.startActivity(intent1);
         }
     }

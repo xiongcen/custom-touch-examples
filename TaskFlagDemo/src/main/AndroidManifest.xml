@@ -16,8 +16,7 @@
         </activity>
 
         <activity android:name=".OneActivity"
-            android:taskAffinity="com.example.xiongcen.myapplication"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
         <activity android:name=".TwoActivity" />
 
         <receiver android:name=".MainActivity$PushReceiver">
