@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent1 = null;
             if ("one".equals(flag)) {
                 intent1 = new Intent(context, OneActivity.class);
-//                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             } else if ("two".equals(flag)) {
                 intent1 = new Intent(context, TwoActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
 
             context.startActivity(intent1);
